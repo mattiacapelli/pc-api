@@ -16,3 +16,12 @@ var config = {
     port: 3000
 }
 
+//Log function 
+function log(level, message) {
+    if (loglevel[level]) {
+        console.log(loglevel[level](message));
+    } else {
+        console.log(loglevel['info'](message));
+    }
+}
+

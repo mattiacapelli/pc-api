@@ -1,0 +1,26 @@
+{
+  "name": "rest-api-hardware-info",
+  "version": "1.0.0",
+  "description": "Simple rest api to get the hardware information",
+  "main": "./src/server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon ./src/server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mattiacapelli/rest-api-hardware-info.git"
+  },
+  "author": "Mattia Capelli (www.mattiacapelli.it)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mattiacapelli/rest-api-hardware-info/issues"
+  },
+  "homepage": "https://github.com/mattiacapelli/rest-api-hardware-info#readme",
+  "dependencies": {
+    "chalk": "^4.1.2",
+    "express": "^4.18.2",
+    "nodemon": "^2.0.20",
+    "os": "^0.1.2"
+  }
+}

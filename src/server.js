@@ -36,6 +36,27 @@ function getIP(req) {
     }
 }
 
+//Function to get upload and download speed using speedtest.net
+
+function getSpeed() {
+    var speedTest = require('speedtest-net');
+    var test = speedTest({maxTime: 5000});
+    var speed = {
+        download: 0,
+        upload: 0
+    };
+    test.on('data', data => {
+        speed.download = data.speeds.download;
+        speed.upload = data.speeds.upload;
+    });
+    test.on('error', err => {
+        log('error', 'Error getting speed');
+    });
+    return speed;
+}
+
+
+
 //Clear console
 console.clear();
 

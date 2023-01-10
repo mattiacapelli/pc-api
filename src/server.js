@@ -25,3 +25,16 @@ function log(level, message) {
     }
 }
 
+//Get ip address from request
+function getIP(req) {
+    switch (req.ip)
+    {
+        case '::1':
+            return 'localhost';
+        default:
+            return req.ip;
+    }
+}
+
+//Clear console
+console.clear();

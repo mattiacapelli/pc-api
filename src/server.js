@@ -45,7 +45,7 @@ app.listen(config.port, function(err) {
     if(err) {
         log('error', 'Error starting server');
     } else {
-        log('success', 'Server started on port ' + config.port + '\n' + chalk.underline('http://localhost:' + config.port));
+        log('success','-'.repeat(30) + '\n' + 'Server started on port ' + config.port + '\n' + chalk.underline('http://localhost:' + config.port) + '\n' + '-'.repeat(30));
     }
 });
 
@@ -58,7 +58,7 @@ app.get('/', function (req, res) {
 });
 
 app.get('/os', function (req, res) {
-log('info', 'Express > Request received from ' + getIP(req));
+    log('info', 'Express > Request received from ' + getIP(req));
     res.json({
         code: 200,
         message: 'OK',
@@ -69,12 +69,13 @@ log('info', 'Express > Request received from ' + getIP(req));
             arch: os.arch(),
             release: os.release(),
             uptime: os.uptime(),
+            user: os.userInfo(),
         }
     });
 });
 
 app.get('/os/hostname', function (req, res) {
-log('info', 'Express > Request received from ' + getIP(req));
+    log('info', 'Express > Request received from ' + getIP(req));
     res.json({
         code: 200,
         message: 'OK',
@@ -85,7 +86,7 @@ log('info', 'Express > Request received from ' + getIP(req));
 });
 
 app.get('/os/type', function (req, res) {
-log('info', 'Express > Request received from ' + getIP(req));
+    log('info', 'Express > Request received from ' + getIP(req));
     res.json({
         code: 200,
         message: 'OK',
@@ -96,7 +97,7 @@ log('info', 'Express > Request received from ' + getIP(req));
 });
 
 app.get('/os/platform', function (req, res) {
-log('info', 'Express > Request received from ' + getIP(req));
+    log('info', 'Express > Request received from ' + getIP(req));
     res.json({
         code: 200,
         message: 'OK',
@@ -107,7 +108,7 @@ log('info', 'Express > Request received from ' + getIP(req));
 });
 
 app.get('/os/arch', function (req, res) {
-log('info', 'Express > Request received from ' + getIP(req));
+    log('info', 'Express > Request received from ' + getIP(req));
     res.json({
         code: 200,
         message: 'OK',
@@ -118,7 +119,7 @@ log('info', 'Express > Request received from ' + getIP(req));
 });
 
 app.get('/os/release', function (req, res) {
-log('info', 'Express > Request received from ' + getIP(req));
+    log('info', 'Express > Request received from ' + getIP(req));
     res.json({
         code: 200,
         message: 'OK',
@@ -129,12 +130,61 @@ log('info', 'Express > Request received from ' + getIP(req));
 });
 
 app.get('/os/uptime', function (req, res) {
-log('info', 'Express > Request received from ' + getIP(req));
+    log('info', 'Express > Request received from ' + getIP(req));
     res.json({
         code: 200,
         message: 'OK',
         data: {
             uptime: os.uptime()
+        }
+    });
+});
+
+app.get('/os/user', function (req, res) {
+    log('info', 'Express > Request received from ' + getIP(req));
+    res.json({
+        code: 200,
+        message: 'OK',
+        data: {
+            user: os.userInfo()
+        }
+    });
+});
+
+// network info
+app.get('/network', function (req, res) {
+    log('info', 'Express > Request received from ' + getIP(req));
+    res.json({
+        code: 200,
+        message: 'OK',
+        data: {
+            networkInterfaces: os.networkInterfaces(),
+        }
+    });
+});
+
+app.get('/network/interfaces', function (req, res) {
+    log('info', 'Express > Request received from ' + getIP(req));
+    res.json({
+        code: 200,
+        message: 'OK',
+        data: {
+            networkInterfaces: os.networkInterfaces(),
+        }
+    });
+});
+
+// hardware info
+app.get('/hardware', function (req, res) {
+    log('info', 'Express > Request received from ' + getIP(req));
+    res.json({
+        code: 200,
+        message: 'OK',
+        data: {
+            totalmem: os.totalmem(),
+            freemem: os.freemem(),
+            cpus: os.cpus(),
+            networkInterfaces: os.networkInterfaces(),
         }
     });
 });

@@ -11,3 +11,8 @@ var loglevel =
     warning: chalk.yellow,
     info: chalk.blue
 }
+
+var config = {
+    port: 3000
+}
+

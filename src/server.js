@@ -12,6 +12,7 @@ var loglevel =
     info: chalk.blue
 }
 
+//Config object
 var config = {
     port: 3000
 }
@@ -36,32 +37,13 @@ function getIP(req) {
     }
 }
 
-//Function to get upload and download speed using speedtest.net
-
-function getSpeed() {
-    var speedTest = require('speedtest-net');
-    var test = speedTest({maxTime: 5000});
-    var speed = {
-        download: 0,
-        upload: 0
-    };
-    test.on('data', data => {
-        speed.download = data.speeds.download;
-        speed.upload = data.speeds.upload;
-    });
-    test.on('error', err => {
-        log('error', 'Error getting speed');
-    });
-    return speed;
-}
-
-
-
 //Clear console
 console.clear();
 
+//Create express app
 var app = express();
 
+//Start server
 app.listen(config.port, function(err) {
     if(err) {
         log('error', 'Error starting server');
@@ -70,17 +52,30 @@ app.listen(config.port, function(err) {
     }
 });
 
+/*  
+    ------------
+    Basic Routes
+    ------------
+*/
+
 app.get('/', function (req, res) {
     log('info', 'Express > Request received from ' + getIP(req));
-    res.json({
+    res.status(200).json({
         code: 200,
         message: 'OK',
     });
 });
 
+/*
+    ------------
+    OS Routes
+    ------------
+*/
+
+// Get all os info
 app.get('/os', function (req, res) {
     log('info', 'Express > Request received from ' + getIP(req));
-    res.json({
+    res.status(200).json({
         code: 200,
         message: 'OK',
         data: {
@@ -95,9 +90,10 @@ app.get('/os', function (req, res) {
     });
 });
 
+// Get hostname from os
 app.get('/os/hostname', function (req, res) {
     log('info', 'Express > Request received from ' + getIP(req));
-    res.json({
+    res.status(200).json({
         code: 200,
         message: 'OK',
         data: {
@@ -106,20 +102,25 @@ app.get('/os/hostname', function (req, res) {
     });
 });
 
+// Get type from os
 app.get('/os/type', function (req, res) {
     log('info', 'Express > Request received from ' + getIP(req));
-    res.json({
+    res.status(200).json({
         code: 200,
         message: 'OK',
         data: {
             type: os.type()
         }
     });
+
+    req.status(200).message('OK').data({
+        type: os.type()
+    });
 });
 
 app.get('/os/platform', function (req, res) {
     log('info', 'Express > Request received from ' + getIP(req));
-    res.json({
+    res.status(200).json({
         code: 200,
         message: 'OK',
         data: {
@@ -130,7 +131,7 @@ app.get('/os/platform', function (req, res) {
 
 app.get('/os/arch', function (req, res) {
     log('info', 'Express > Request received from ' + getIP(req));
-    res.json({
+    res.status(200).json({
         code: 200,
         message: 'OK',
         data: {
@@ -141,7 +142,7 @@ app.get('/os/arch', function (req, res) {
 
 app.get('/os/release', function (req, res) {
     log('info', 'Express > Request received from ' + getIP(req));
-    res.json({
+    res.status(200).json({
         code: 200,
         message: 'OK',
         data: {
@@ -152,7 +153,7 @@ app.get('/os/release', function (req, res) {
 
 app.get('/os/uptime', function (req, res) {
     log('info', 'Express > Request received from ' + getIP(req));
-    res.json({
+    res.status(200).json({
         code: 200,
         message: 'OK',
         data: {
@@ -163,7 +164,7 @@ app.get('/os/uptime', function (req, res) {
 
 app.get('/os/user', function (req, res) {
     log('info', 'Express > Request received from ' + getIP(req));
-    res.json({
+    res.status(200).json({
         code: 200,
         message: 'OK',
         data: {
@@ -175,18 +176,41 @@ app.get('/os/user', function (req, res) {
 // network info
 app.get('/network', function (req, res) {
     log('info', 'Express > Request received from ' + getIP(req));
-    res.json({
+    res.status(200).json({
         code: 200,
         message: 'OK',
         data: {
             networkInterfaces: os.networkInterfaces(),
+            //TODO: add public ip and speed test here
+        }
+    });
+});
+
+app.get('/network/networkInterfaces', function (req, res) {
+    log('info', 'Express > Request received from ' + getIP(req));
+    res.status(200).json({
+        code: 200,
+        message: 'OK',
+        data: {
+            networkInterfaces: os.networkInterfaces(),
+        }
+    });
+});
+
+app.get('/network/networkInterfaces/:interface', function (req, res) {
+    log('info', 'Express > Request received from ' + getIP(req));
+    res.status(200).json({
+        code: 200,
+        message: 'OK',
+        data: {
+            networkInterfaces: os.networkInterfaces()[req.params.interface]
         }
     });
 });
 
 app.get('/network/interfaces', function (req, res) {
     log('info', 'Express > Request received from ' + getIP(req));
-    res.json({
+    res.status(200).json({
         code: 200,
         message: 'OK',
         data: {
@@ -195,10 +219,10 @@ app.get('/network/interfaces', function (req, res) {
     });
 });
 
-// hardware info
+// 
 app.get('/hardware', function (req, res) {
     log('info', 'Express > Request received from ' + getIP(req));
-    res.json({
+    res.status(200).json({
         code: 200,
         message: 'OK',
         data: {
@@ -206,6 +230,39 @@ app.get('/hardware', function (req, res) {
             freemem: os.freemem(),
             cpus: os.cpus(),
             networkInterfaces: os.networkInterfaces(),
+        }
+    });
+});
+
+app.get('/hardware/totalmem', function (req, res) {
+    log('info', 'Express > Request received from ' + getIP(req));
+    res.status(200).json({
+        code: 200,
+        message: 'OK',
+        data: {
+            totalmem: os.totalmem()
+        }
+    });
+});
+
+app.get('/hardware/freemem', function (req, res) {
+    log('info', 'Express > Request received from ' + getIP(req));
+    res.status(200).json({
+        code: 200,
+        message: 'OK',
+        data: {
+            freemem: os.freemem()
+        }
+    });
+});
+
+app.get('/hardware/cpus', function (req, res) {
+    log('info', 'Express > Request received from ' + getIP(req));
+    res.status(200).json({
+        code: 200,
+        message: 'OK',
+        data: {
+            cpus: os.cpus()
         }
     });
 });

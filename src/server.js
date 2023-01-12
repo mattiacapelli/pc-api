@@ -75,9 +75,7 @@ app.get('/', function (req, res) {
 // Get all os info
 app.get('/os', function (req, res) {
     log('info', 'Express > Request received from ' + getIP(req));
-    res.status(200).json({
-        code: 200,
-        message: 'OK',
+    res.status(200).message('OK').json({
         data: {
             hostname: os.hostname(),
             type: os.type(),
@@ -94,11 +92,7 @@ app.get('/os', function (req, res) {
 app.get('/os/hostname', function (req, res) {
     log('info', 'Express > Request received from ' + getIP(req));
     res.status(200).json({
-        code: 200,
-        message: 'OK',
-        data: {
-            hostname: os.hostname()
-        }
+        hostname: os.hostname()
     });
 });
 
@@ -106,14 +100,6 @@ app.get('/os/hostname', function (req, res) {
 app.get('/os/type', function (req, res) {
     log('info', 'Express > Request received from ' + getIP(req));
     res.status(200).json({
-        code: 200,
-        message: 'OK',
-        data: {
-            type: os.type()
-        }
-    });
-
-    req.status(200).message('OK').data({
         type: os.type()
     });
 });
@@ -121,55 +107,35 @@ app.get('/os/type', function (req, res) {
 app.get('/os/platform', function (req, res) {
     log('info', 'Express > Request received from ' + getIP(req));
     res.status(200).json({
-        code: 200,
-        message: 'OK',
-        data: {
-            platform: os.platform()
-        }
+        platform: os.platform()
     });
 });
 
 app.get('/os/arch', function (req, res) {
     log('info', 'Express > Request received from ' + getIP(req));
     res.status(200).json({
-        code: 200,
-        message: 'OK',
-        data: {
-            arch: os.arch()
-        }
+        arch: os.arch()
     });
 });
 
 app.get('/os/release', function (req, res) {
     log('info', 'Express > Request received from ' + getIP(req));
     res.status(200).json({
-        code: 200,
-        message: 'OK',
-        data: {
-            release: os.release()
-        }
+        release: os.release()
     });
 });
 
 app.get('/os/uptime', function (req, res) {
     log('info', 'Express > Request received from ' + getIP(req));
     res.status(200).json({
-        code: 200,
-        message: 'OK',
-        data: {
-            uptime: os.uptime()
-        }
+        uptime: os.uptime()
     });
 });
 
 app.get('/os/user', function (req, res) {
     log('info', 'Express > Request received from ' + getIP(req));
     res.status(200).json({
-        code: 200,
-        message: 'OK',
-        data: {
-            user: os.userInfo()
-        }
+        user: os.userInfo()
     });
 });
 
@@ -177,45 +143,30 @@ app.get('/os/user', function (req, res) {
 app.get('/network', function (req, res) {
     log('info', 'Express > Request received from ' + getIP(req));
     res.status(200).json({
-        code: 200,
-        message: 'OK',
-        data: {
-            networkInterfaces: os.networkInterfaces(),
-            //TODO: add public ip and speed test here
-        }
+
+        networkInterfaces: os.networkInterfaces(),
+        //TODO: add public ip and speed test here
     });
 });
 
 app.get('/network/networkInterfaces', function (req, res) {
     log('info', 'Express > Request received from ' + getIP(req));
     res.status(200).json({
-        code: 200,
-        message: 'OK',
-        data: {
-            networkInterfaces: os.networkInterfaces(),
-        }
+        networkInterfaces: os.networkInterfaces(),
     });
 });
 
 app.get('/network/networkInterfaces/:interface', function (req, res) {
     log('info', 'Express > Request received from ' + getIP(req));
     res.status(200).json({
-        code: 200,
-        message: 'OK',
-        data: {
-            networkInterfaces: os.networkInterfaces()[req.params.interface]
-        }
+        networkInterfaces: os.networkInterfaces()[req.params.interface]
     });
 });
 
 app.get('/network/interfaces', function (req, res) {
     log('info', 'Express > Request received from ' + getIP(req));
     res.status(200).json({
-        code: 200,
-        message: 'OK',
-        data: {
-            networkInterfaces: os.networkInterfaces(),
-        }
+        networkInterfaces: os.networkInterfaces(),
     });
 });
 
@@ -223,46 +174,30 @@ app.get('/network/interfaces', function (req, res) {
 app.get('/hardware', function (req, res) {
     log('info', 'Express > Request received from ' + getIP(req));
     res.status(200).json({
-        code: 200,
-        message: 'OK',
-        data: {
-            totalmem: os.totalmem(),
-            freemem: os.freemem(),
-            cpus: os.cpus(),
-            networkInterfaces: os.networkInterfaces(),
-        }
+        totalmem: os.totalmem(),
+        freemem: os.freemem(),
+        cpus: os.cpus(),
+        networkInterfaces: os.networkInterfaces(),
     });
 });
 
 app.get('/hardware/totalmem', function (req, res) {
     log('info', 'Express > Request received from ' + getIP(req));
     res.status(200).json({
-        code: 200,
-        message: 'OK',
-        data: {
-            totalmem: os.totalmem()
-        }
+        totalmem: os.totalmem()
     });
 });
 
 app.get('/hardware/freemem', function (req, res) {
     log('info', 'Express > Request received from ' + getIP(req));
     res.status(200).json({
-        code: 200,
-        message: 'OK',
-        data: {
-            freemem: os.freemem()
-        }
+        freemem: os.freemem()
     });
 });
 
 app.get('/hardware/cpus', function (req, res) {
     log('info', 'Express > Request received from ' + getIP(req));
     res.status(200).json({
-        code: 200,
-        message: 'OK',
-        data: {
-            cpus: os.cpus()
-        }
+        cpus: os.cpus()
     });
 });

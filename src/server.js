@@ -1,7 +1,6 @@
 var express = require('express');
 var chalk = require('chalk');
 var { exec } = require('child_process');
-const shutDownWin = require('node-shutdown-windows');
 var os = require('os');
 
 var loglevel = 
@@ -46,14 +45,9 @@ console.clear();
 var app = express();
 
 //Start server
-app.listen(config.port, function(err) {
-    if(err) {
-        log('error', 'Error starting server');
-    } else {
-        log('success','-'.repeat(30) + '\n' + 'Server started on port ' + config.port + '\n' + chalk.underline('http://localhost:' + config.port) + '\n' + '-'.repeat(30));
-    }
-});
-
+app.listen(config.port, function () {
+    log('success','-'.repeat(30) + '\n' + 'Server started on port ' + config.port + '\n' + chalk.underline('http://localhost:' + config.port) + '\n' + '-'.repeat(30));
+}); 
 /*  
     -------------------------
     Protect the action Routes

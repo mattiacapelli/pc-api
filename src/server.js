@@ -82,6 +82,8 @@ app.use(function (req, res, next) {
     ------------
 */
 
+// Create a request using add method
+
 app.get('/', function (req, res) {
     log('info', 'Express > Request received from ' + getIP(req));
     res.status(200).json({
@@ -97,9 +99,9 @@ app.get('/', function (req, res) {
 */
 
 // Get all os info
-app.get('/os', function (req, res) {
+app.post('/os', function (req, res) {
     log('info', 'Express > Request received from ' + getIP(req));
-    res.status(200).message('OK').json({
+    res.status(200).json({
         data: {
             hostname: os.hostname(),
             type: os.type(),
@@ -163,6 +165,12 @@ app.get('/os/user', function (req, res) {
     });
 });
 
+/*
+    ------------
+    Network Routes
+    ------------
+*/
+
 // network info
 app.get('/network', function (req, res) {
     log('info', 'Express > Request received from ' + getIP(req));
@@ -194,7 +202,11 @@ app.get('/network/interfaces', function (req, res) {
     });
 });
 
-// 
+/*
+    ------------
+    Hardware Routes
+    ------------
+*/
 app.get('/hardware', function (req, res) {
     log('info', 'Express > Request received from ' + getIP(req));
     res.status(200).json({

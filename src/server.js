@@ -99,7 +99,7 @@ app.get('/', function (req, res) {
 */
 
 // Get all os info
-app.post('/os', function (req, res) {
+app.get('/os', function (req, res) {
     log('info', 'Express > Request received from ' + getIP(req));
     res.status(200).json({
         data: {

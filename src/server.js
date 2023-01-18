@@ -54,21 +54,27 @@ app.listen(config.port, function () {
     -------------------------
 */
 
-app.use(function (req, res, next) {
-    if(req.path.includes('/action/')) {
-        if(req.query.key == '123456') {
-
-        }
-        else 
-        {
+//Protect the action routes with a token
+app.use('/action', function (req, res, next) {
+    if (req.query.token != undefined || req.query.token != null || req.query.token != '') {
+        if (req.query.token == '123456') {
+            next();
+        } else {
+            log('error', 'Express > Request received from ' + getIP(req) + ' with invalid token');
             res.status(401).json({
                 code: 401,
                 message: 'Unauthorized',
             });
         }
     }
+    else {
+        log('error', 'Express > Request received from ' + getIP(req) + ' without token');
+        res.status(401).json({
+            code: 401,
+            message: 'Unauthorized',
+        });
+    }
 });
-
 
 /*  
     ------------

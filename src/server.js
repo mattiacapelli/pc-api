@@ -55,6 +55,28 @@ app.listen(config.port, function(err) {
 });
 
 /*  
+    -------------------------
+    Protect the action Routes
+    -------------------------
+*/
+
+app.use(function (req, res, next) {
+    if(req.path.includes('/action/')) {
+        if(req.query.key == '123456') {
+
+        }
+        else 
+        {
+            res.status(401).json({
+                code: 401,
+                message: 'Unauthorized',
+            });
+        }
+    }
+});
+
+
+/*  
     ------------
     Basic Routes
     ------------

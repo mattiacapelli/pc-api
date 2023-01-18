@@ -237,3 +237,21 @@ app.get('/hardware/cpus', function (req, res) {
         cpus: os.cpus()
     });
 });
+
+
+/*
+    ------------
+    Action Routes
+    ------------
+*/
+
+// Shutdown
+app.get('/action/shutdown', function (req, res) {
+    log('info', 'Express > Request received from ' + getIP(req));
+    res.status(200).json({
+        message: 'Shutting down...'
+    });
+    log('info', 'Shutting down...');
+    //Shutdown now
+    exec('shutdown /s /t 0');
+});

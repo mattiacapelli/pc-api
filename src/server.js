@@ -1,5 +1,7 @@
 var express = require('express');
 var chalk = require('chalk');
+var { exec } = require('child_process');
+const shutDownWin = require('node-shutdown-windows');
 var os = require('os');
 
 var loglevel = 

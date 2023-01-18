@@ -248,10 +248,184 @@ app.get('/hardware/cpus', function (req, res) {
 // Shutdown
 app.get('/action/shutdown', function (req, res) {
     log('info', 'Express > Request received from ' + getIP(req));
-    res.status(200).json({
-        message: 'Shutting down...'
+
+    switch (os.platform()) {
+        case 'Windows_NT':
+            exec('shutdown -s -t 0');
+
+            res.status(200).json({
+                message: 'Shutting down...'
+            });
+            log('info', 'Shutting down...');
+            break;
+
+        case 'Linux':
+            exec('shutdown -h now');
+
+            res.status(200).json({
+                message: 'Shutting down...'
+            });
+            log('info', 'Shutting down...');
+            break;
+
+        case 'Darwin':
+            exec('shutdown -h now');
+
+            res.status(200).json({
+                message: 'Shutting down...'
+            });
+            log('info', 'Shutting down...');
+            break;
+
+        default:
+            res.status(400).json({
+                message: 'Unsupported OS'
+            });
+            log('error', 'Unsupported OS');
+            break;
+    }
+});
+
+// Reboot
+app.get('/action/reboot', function (req, res) {
+    log('info', 'Express > Request received from ' + getIP(req));
+
+    switch (os.platform()) {
+        case 'Windows_NT':
+            exec('shutdown -r -t 0');
+
+            res.status(200).json({
+                message: 'Rebooting...'
+            });
+            log('info', 'Rebooting...');
+            break;
+
+        case 'Linux':
+            exec('reboot');
+
+            res.status(200).json({
+                message: 'Rebooting...'
+            });
+            log('info', 'Rebooting...');
+            break;
+
+        case 'Darwin':
+            exec('reboot');
+
+            res.status(200).json({
+                message: 'Rebooting...'
+            });
+            log('info', 'Rebooting...');
+            break;
+
+        default:
+            res.status(400).json({
+                message: 'Unsupported OS'
+            });
+            log('error', 'Unsupported OS');
+            break;
+    }
+});
+
+// Logoff
+app.get('/action/logoff', function (req, res) {
+    log('info', 'Express > Request received from ' + getIP(req));
+
+    switch (os.platform()) {
+        case 'Windows_NT':
+            exec('shutdown -l -t 0');
+
+            res.status(200).json({
+                message: 'Logging off...'
+            });
+            log('info', 'Logging off...');
+            break;
+
+        case 'Linux':
+            exec('pkill -KILL -u ' + os.userInfo().username);
+
+            res.status(200).json({
+                message: 'Logging off...'
+            });
+            log('info', 'Logging off...');
+            break;
+
+        case 'Darwin':
+            exec('pkill -KILL -u ' + os.userInfo().username);
+
+            res.status(200).json({
+                message: 'Logging off...'
+            });
+            log('info', 'Logging off...');
+            break;
+
+        default:
+            res.status(400).json({
+                message: 'Unsupported OS'
+            });
+            log('error', 'Unsupported OS');
+            break;
+    }
+});
+
+// Lock
+app.get('/action/lock', function (req, res) {
+    log('info', 'Express > Request received from ' + getIP(req));
+
+    switch (os.platform()) {
+        case 'Windows_NT':
+            exec('rundll32.exe user32.dll,LockWorkStation');
+
+            res.status(200).json({
+                message: 'Locking...'
+            });
+            log('info', 'Locking...');
+            break;
+
+        case 'Linux':
+            exec('xdg-screensaver lock');
+
+            res.status(200).json({
+                message: 'Locking...'
+            });
+            log('info', 'Locking...');
+            break;
+
+        case 'Darwin':
+            exec('pmset displaysleepnow');
+
+            res.status(200).json({
+                message: 'Locking...'
+            });
+            log('info', 'Locking...');
+            break;
+
+        default:
+            res.status(400).json({
+                message: 'Unsupported OS'
+            });
+            log('error', 'Unsupported OS');
+            break;
+    }
+});
+
+// Execute
+app.post('/action/execute', function (req, res) {
+    log('info', 'Express > Request received from ' + getIP(req));
+
+    var command = req.body.command;
+
+    exec(command, function (error, stdout, stderr) {
+        if (error) {
+            res.status(400).json({
+                message: error
+            });
+            log('error', error);
+        } else {
+            res.status(200).json({
+                message: stdout
+            });
+            log('info', stdout);
+        }
     });
-    log('info', 'Shutting down...');
-    //Shutdown now
-    exec('shutdown /s /t 0');
 });

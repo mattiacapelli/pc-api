@@ -15,7 +15,8 @@ var loglevel =
 
 //Config object
 var config = {
-    port: 3000
+    port: 3000,
+    token: '123456'
 }
 
 //Log function 
@@ -46,7 +47,7 @@ var app = express();
 
 //Start server
 app.listen(config.port, function () {
-    log('success','-'.repeat(30) + '\n' + 'Server started on port ' + config.port + '\n' + chalk.underline('http://localhost:' + config.port) + '\n' + '-'.repeat(30));
+    log('success','-'.repeat(30) + '\n' + 'Server started on port ' + config.port + '\n' + chalk.underline('http://localhost:' + config.port) + '\n' + '\nTo use action routes the token is \"' + config.token + '\" \n' + '-'.repeat(30));
 }); 
 /*  
     -------------------------
@@ -57,7 +58,7 @@ app.listen(config.port, function () {
 //Protect the action routes with a token
 app.use('/action', function (req, res, next) {
     if (req.query.token != undefined || req.query.token != null || req.query.token != '') {
-        if (req.query.token == '123456') {
+        if (req.query.token == config.token) {
             next();
         } else {
             log('error', 'Express > Request received from ' + getIP(req) + ' with invalid token');
@@ -249,7 +250,7 @@ app.get('/hardware/cpus', function (req, res) {
 app.get('/action/shutdown', function (req, res) {
     log('info', 'Express > Request received from ' + getIP(req));
 
-    switch (os.platform()) {
+    switch (os.type()) {
         case 'Windows_NT':
             exec('shutdown -s -t 0');
 
@@ -290,7 +291,7 @@ app.get('/action/shutdown', function (req, res) {
 app.get('/action/reboot', function (req, res) {
     log('info', 'Express > Request received from ' + getIP(req));
 
-    switch (os.platform()) {
+    switch (os.type()) {
         case 'Windows_NT':
             exec('shutdown -r -t 0');
 
@@ -320,7 +321,8 @@ app.get('/action/reboot', function (req, res) {
 
         default:
             res.status(400).json({
-                message: 'Unsupported OS'
+                message: 'Unsupported OS',
+                type: os.type()
             });
             log('error', 'Unsupported OS');
             break;
@@ -331,7 +333,7 @@ app.get('/action/reboot', function (req, res) {
 app.get('/action/logoff', function (req, res) {
     log('info', 'Express > Request received from ' + getIP(req));
 
-    switch (os.platform()) {
+    switch (os.type()) {
         case 'Windows_NT':
             exec('shutdown -l -t 0');
 
@@ -366,13 +368,14 @@ app.get('/action/logoff', function (req, res) {
             log('error', 'Unsupported OS');
             break;
     }
+    
 });
 
 // Lock
 app.get('/action/lock', function (req, res) {
     log('info', 'Express > Request received from ' + getIP(req));
 
-    switch (os.platform()) {
+    switch (os.type()) {
         case 'Windows_NT':
             exec('rundll32.exe user32.dll,LockWorkStation');
 

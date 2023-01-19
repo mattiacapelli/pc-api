@@ -416,19 +416,27 @@ app.get('/action/lock', function (req, res) {
 app.post('/action/execute', function (req, res) {
     log('info', 'Express > Request received from ' + getIP(req));
 
-    var command = req.body.command;
+    if (req.query.command != undefined && req.query.command != null && req.query.command != '') {
 
-    exec(command, function (error, stdout, stderr) {
-        if (error) {
-            res.status(400).json({
-                message: error
-            });
-            log('error', error);
-        } else {
-            res.status(200).json({
-                message: stdout
-            });
-            log('info', stdout);
-        }
-    });
+        var command = req.query.command;
+        
+        exec(command, function (error, stdout, stderr) {
+            if (error) {
+                res.status(400).json({
+                    message: error
+                });
+                log('error', error);
+            } else {
+                res.status(200).json({
+                    message: stdout
+                });
+                log('info', stdout);
+            }
+        });
+    } else {
+        res.status(400).json({
+            message: 'No command specified'
+        });
+        log('error', 'No command specified');
+    }
 });

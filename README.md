@@ -23,3 +23,7 @@ npm run start
 ## 📝 License
 
 This project is under the MIT license. See the [LICENSE] file for more details.
+
+## 💸 Donate
+
+If you want to support me, you can donate me on.

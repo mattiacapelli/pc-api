@@ -1,4 +1,4 @@
-# 🐝 PC Remote control API 
+# 🐝 PC API
 
 This is a simple API to control your PC remotely and get some information. It is written in Javascript and uses Node.js.
 
@@ -7,8 +7,8 @@ This is a simple API to control your PC remotely and get some information. It is
 To install the API, you need to have Node.js installed on your computer. Then, you can clone the repository and install the dependencies with the following commands:
 
 ```bash
-git clone https
-cd pc-remote-control-api
+git clone https://github.com/mattiacapelli/pc-api
+cd pc-api
 npm i
 ```
 

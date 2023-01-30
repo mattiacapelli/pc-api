@@ -20,6 +20,13 @@ To start the API, you need to run the following command:
 npm run start
 ```
 
+## 🐝 API
+
+#### 📡 GET /
+```
+This endpoint returns a web page with some information about the hardware of the server.
+```
+
 ## 📝 License
 
 This project is under the MIT license. See the [LICENSE] file for more details.

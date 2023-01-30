@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<style>
+    table, th, td {
+        border: 1px solid black;
+        border-collapse: collapse;
+    }
+    th, td {
+        padding: 5px;
+        text-align: left;
+    }
+</style>
+
+<script>
+        fetch('/os', {
+        headers: {
+            'Accept': 'application/json'
+        }})
+        .then(response => response.json())
+        .then(json => show(json, 'os'))
+
+        function show(data, type) {
+            console.log(data);
+            switch (type) {
+                case 'os':
+                    document.getElementById("arch").innerHTML = data.data.arch;
+                    document.getElementById("hostname").innerHTML = data.data.hostname;
+                    document.getElementById("platform").innerHTML = data.data.platform;
+                    document.getElementById("release").innerHTML = data.data.release;
+                    document.getElementById("Type").innerHTML = data.data.type;
+
+                    document.getElementById("username").innerHTML = data.data.user.username;
+                    document.getElementById("uid").innerHTML = data.data.user.uid;
+                    document.getElementById("shell").innerHTML = data.data.user.shell;
+                    document.getElementById("homedir").innerHTML = data.data.user.homedir;
+                    document.getElementById("gid").innerHTML = data.data.user.gid;
+                    break;
+
+                case 'hardware':
+                    break;
+
+                default:
+                    alert("Error")
+                    break;
+            }
+        }
+
+</script>
+<body>
+    <table>
+        <tr>
+          <th>Arch:</th>
+          <td id="arch"></td>
+        </tr>
+        <tr>
+          <th>Hostname:</th>
+          <td id="hostname"></td>
+        </tr>
+        <tr>
+          <th>Platform:</th>
+          <td id="platform"></td>
+        </tr>
+          <tr>
+          <th>Release:</th>
+          <td id="release"></td>
+        </tr>
+        <tr>
+          <th>OS Type:</th>
+          <td id="Type"></td>
+        </tr>
+      </table>
+      <br>
+      <table>
+        <tr>
+          <th>Username:</th>
+          <td id="username"></td>
+        </tr>
+        <tr>
+          <th>User ID:</th>
+          <td id="uid"></td>
+        </tr>
+        <tr>
+          <th>Shell:</th>
+          <td id="shell"></td>
+        </tr>
+          <tr>
+          <th>Home Directory:</th>
+          <td id="homedir"></td>
+        </tr>
+        <tr>
+          <th>GID:</th>
+          <td id="gid"></td>
+        </tr>
+      </table>
+</body>
+</html>

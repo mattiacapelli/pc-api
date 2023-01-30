@@ -87,10 +87,12 @@ app.use('/action', function (req, res, next) {
 
 app.get('/', function (req, res) {
     log('info', 'Express > Request received from ' + getIP(req));
-    res.status(200).json({
+    /*res.status(200).json({
         code: 200,
         message: 'OK',
-    });
+    });*/
+
+    res.sendFile(__dirname + '/public/index.html');
 });
 
 /*
